@@ -27,14 +27,19 @@ const SingleLineChartForAtmosphericValues = ({ chartData, dataKey, title }: Prop
     ],
   });
 
+
+
   useEffect(() => {
     if (!chartData || chartData.length === 0) return;
-
+  
     const formattedData = chartData.map((item) => ({
-      timeDisplay: item.timeDisplay, // x-axis label
-      value: item[dataKey], // y-axis numeric value
+      timeDisplay: item.timeDisplay,
+      dateDisplay: item.dateDisplay,   // ⬅ include this field
+      value: item[dataKey],
     }));
 
+
+  
     const options: AgChartOptions = {
       data: formattedData,
       theme: theme === "dark" ? "ag-default-dark" : "ag-default",
@@ -48,13 +53,26 @@ const SingleLineChartForAtmosphericValues = ({ chartData, dataKey, title }: Prop
           yKey: "value",
           strokeWidth: 2,
           marker: { enabled: true, size: 8 },
-
+          tooltip: {
+            renderer: ({ datum }) => {
+              return {
+                title: `Date: ${datum.dateDisplay}`,
+                content: `
+                  <div>
+                    <div><strong>Value:</strong> ${datum.value}</div>
+                    <div><strong>Date:</strong> ${datum.dateDisplay}</div>
+                  </div>
+                `,
+              };
+            },
+          },
+          
         },
       ],
       axes: [
         {
           position: "bottom",
-          type: "category", // using string timeDisplay
+          type: "category",
           title: { text: "Time" },
           label: { color: theme === "dark" ? "#ffffff" : "#000000" },
         },
@@ -67,9 +85,10 @@ const SingleLineChartForAtmosphericValues = ({ chartData, dataKey, title }: Prop
       ],
       legend: { enabled: false },
     };
-
+  
     setChartOptions(options);
   }, [chartData, dataKey, theme]);
+  
 
   return (
  <Card className={`my-[1.5%]  shadow-lg`}>
