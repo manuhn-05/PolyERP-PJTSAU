@@ -32,7 +32,9 @@ const isNavbarVisible =useMemo(()=>{
     return HOME_NAVBAR.some(item => item.link === path) || isHomePageRoute;
 },[path,isHomePageRoute])
 
-if(!isNavbarVisible) return null;
+// if(!isNavbarVisible) return null;
+
+if(path!=="/")return null;
     return (
         <section className={`sticky top-0 left-0 w-full z-10 text-[4vw] md:text-[2.2vw] `}>
             <nav className={`w-full mx-auto hidden md:flex justify-between items-center absolute top-0 

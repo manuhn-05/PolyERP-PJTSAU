@@ -9,7 +9,7 @@ import {QueryClient, QueryClientProvider, } from '@tanstack/react-query';
 import { ToastContainer } from 'react-toastify';
 import "@/lib/i18n";
 import theme from "./theme";
-import { Profiler } from "react";
+
 const queryClient = new QueryClient()
 
 export function Providers({ children }: { children: React.ReactNode }) {

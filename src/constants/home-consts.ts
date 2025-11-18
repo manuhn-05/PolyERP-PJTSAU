@@ -1,5 +1,5 @@
 
-
+// Change for PolyERP
 export const HOME_NAVBAR=[
     {
         id : "home",
@@ -9,18 +9,18 @@ export const HOME_NAVBAR=[
     {
         id : "about",
         name:"About",
-        link:"/about"
+        link:"/auth/sign-in"
     },
     {
         id  : "contact",
         name:"Contact",
-        link:"/contact-us"
+        link:"/auth/sign-in"
     },
     {
 
         id  : "pricing",
         name:"Pricing",
-        link:"/pricing"
+        link:"/auth/sign-in"
     }
 ];
 
