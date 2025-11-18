@@ -9,8 +9,8 @@ import { usePathname } from 'next/navigation';
 import { CLIENT_ENDPOINTS } from '@/data-handling/endpoints/client-endpoints';
 import {     Drawer, DrawerBody, DrawerFooter,
     DrawerHeader, DrawerOverlay, DrawerContent, DrawerCloseButton, } from '@chakra-ui/react';
-  import { FaBars } from "react-icons/fa";
-  import { motion,  } from "framer-motion";
+import { FaBars } from "react-icons/fa";
+
 
 const HomeNavbar = () => {
     const [scroll, setScroll] = React.useState(0);

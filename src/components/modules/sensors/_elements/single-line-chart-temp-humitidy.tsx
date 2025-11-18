@@ -15,6 +15,7 @@ type Props = {
 
 const SingleLineChartForAtmosphericValues = ({ chartData, dataKey, title }: Props) => {
   const { theme } = useTheme();
+
   const [chartOptions, setChartOptions] = useState<AgChartOptions>({
     data: [],
     series: [
@@ -28,16 +29,22 @@ const SingleLineChartForAtmosphericValues = ({ chartData, dataKey, title }: Prop
   });
 
 
+  /*
+  
+  So The chart is finr plotting for today's data when we select the date for yester day or any prevvious daate plotting is not working. means
+  the chart is not plotting the data for the last one but from API I am getting the data it's not auto scaling the data. and plotting the chart
+  */
 
   useEffect(() => {
     if (!chartData || chartData.length === 0) return;
   
     const formattedData = chartData.map((item) => ({
       timeDisplay: item.timeDisplay,
-      dateDisplay: item.dateDisplay,   // ⬅ include this field
+      dateDisplay: item.dateDisplay,
+      timestamp: new Date(item.time).getTime(),   // ⬅ REAL unique value for X-axis
       value: item[dataKey],
     }));
-
+    
 
   
     const options: AgChartOptions = {
@@ -49,42 +56,53 @@ const SingleLineChartForAtmosphericValues = ({ chartData, dataKey, title }: Prop
       series: [
         {
           type: "line",
-          xKey: "timeDisplay",
+          xKey: "timestamp",
           yKey: "value",
           strokeWidth: 2,
           marker: { enabled: true, size: 8 },
           tooltip: {
-            renderer: ({ datum }) => {
-              return {
-                title: `Date: ${datum.dateDisplay}`,
-                content: `
-                  <div>
-                    <div><strong>Value:</strong> ${datum.value}</div>
-                    <div><strong>Date:</strong> ${datum.dateDisplay}</div>
-                  </div>
-                `,
-              };
-            },
+            renderer: ({ datum }) => ({
+              title: `${datum.dateDisplay} ${datum.timeDisplay}`,
+              content: `<div><strong>Value:</strong> ${datum.value}</div>`,
+            }),
           },
-          
         },
       ],
       axes: [
         {
           position: "bottom",
-          type: "category",
+          type: "number",
           title: { text: "Time" },
-          label: { color: theme === "dark" ? "#ffffff" : "#000000" },
+          min: formattedData[0]?.timestamp,   // ⬅ ensures starts from zero relative to first point
+          label: {
+            formatter: ({ value }) => {
+              const date = new Date(value);
+              const roundedDate = new Date(
+                date.getFullYear(),
+                date.getMonth(),
+                date.getDate(),
+                date.getMinutes() >= 30 ? date.getHours() + 1 : date.getHours(),
+                0,
+                0,
+                0
+              );
+              return roundedDate.toLocaleTimeString("en-IN", { hour: "numeric", hour12: true });
+            },
+            color: theme === "dark" ? "#ffffff" : "#000000",
+          },
         },
         {
           position: "left",
           type: "number",
           title: { text: title },
+          min: 0,                               // ⬅ Y Axis starts from 0 always
           label: { color: theme === "dark" ? "#ffffff" : "#000000" },
         },
       ],
+      
       legend: { enabled: false },
     };
+    
   
     setChartOptions(options);
   }, [chartData, dataKey, theme]);

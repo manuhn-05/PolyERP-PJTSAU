@@ -148,7 +148,7 @@ const SensorCharts: React.FC<SensorChartsProps> = ({
   return (
     <div className="w-full mb-[1%] bg-white dark:bg-[#121F31] rounded-lg overflow-hidden">
       <h3 className="text-lg font-bold text-[#122031] dark:text-white p-[1%] border-b border-[#e5e7eb] dark:border-gray-500">
-        {dataLabel}
+        Soil {dataLabel}
       </h3>
       <AgCharts key={chartKey} options={options} />
     </div>
