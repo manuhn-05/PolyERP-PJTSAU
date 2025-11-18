@@ -86,7 +86,7 @@ const UserProfileCOmponent = () => {
                     alt="profile"
                   />
 
-                  <label
+                  {/* <label
                     htmlFor="profilePhoto"
                     className="absolute bottom-0 right-0 flex size-8.5 cursor-pointer items-center justify-center rounded-full bg-primary text-white hover:bg-opacity-90 sm:bottom-2 sm:right-2"
                   >
@@ -100,7 +100,7 @@ const UserProfileCOmponent = () => {
                       onChange={handleChange}
                       accept="image/png, image/jpg, image/jpeg"
                     />
-                  </label>
+                  </label> */}
                 </>
               )}
             </div>

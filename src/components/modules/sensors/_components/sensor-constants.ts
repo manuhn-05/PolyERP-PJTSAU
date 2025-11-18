@@ -95,9 +95,6 @@ export const DUMMY_PLOTS_DATA={
     co2 : MdOutlineCo2,
     light : CiLight,
   }
-
-
- 
   
   const temperatureSensorChartOptions = {
     dataLabel:"Temperature",
@@ -220,16 +217,7 @@ export const DUMMY_PLOTS_DATA={
     ]
   };
 
-  export const CHART_DATA_OPTIONS = {
-    temperature : temperatureSensorChartOptions,
-    moisture : moistureSensorChartOptions,
-    nitrogen : nitrogenSensorChartOptions,
-    phosphorous : phosphorousSensorChartOptions,
-    ph : phSensorChartOptions,
-    potassium : potassiumSensorChartOptions,
-    salinity : salinitySensorChartOptions,
-    ec : electricalConductivitySensorChartOptions,
-  }
+
 
 
   export const SENSOR_OBJECT_EXCLUDE_KEYS= ["timestamp", "device_id", "_id"];

@@ -103,11 +103,11 @@ export async function registerANewSensorDevice( data : any){
     }
 
     export async function fetchSensnorDataBasedOnDevicesList(params: DEVICE_DATA_PROPS_TYPE): Promise<any> {
-        const { start_date, end_date, device_id } = params;
+        const { start_date, end_date, device_id, endpoint } = params;
 
 
             // device_id is assumed to be an array like [1,2,3]
-        const url = `${USER_ENDPOINTS.SOIL_PROBE_SENSOR_DATA}?start_date=${start_date}&end_date=${end_date}&device_id=[${device_id.join(",")}]`;
+        const url = `${endpoint}?start_date=${start_date}&end_date=${end_date}&device_id=[${device_id.join(",")}]`;
       
         try {
           const response = await PolyErpClient.get(url);

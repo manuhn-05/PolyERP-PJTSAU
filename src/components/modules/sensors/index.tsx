@@ -19,15 +19,14 @@ import { Button } from '@chakra-ui/react';
 const SensorsModuleComponent = () => {
   const modalRef = React.useRef<ModalWindowRef>(null);
   const [selectedPlot, setSelectedPlot] = useState<any>(null);
-    const pathname = usePathname();
-    const queryClient = useQueryClient();
-    const selectedPolyhouse = useAppSelector(state => state.polyhouse.selectedPolyhouse);
-    const { mutateAsync: registerNewSensorDevice } = useRegisterNewSensorDevice();
+  const pathname = usePathname();
+  const queryClient = useQueryClient();
+  const selectedPolyhouse = useAppSelector(state => state.polyhouse.selectedPolyhouse);
+  const { mutateAsync: registerNewSensorDevice } = useRegisterNewSensorDevice();
 
   const [selectedPlotsId, setSelectedPlotsId] = useState<Array<string>>([]);
 
   const { data: listOfSensorDevices, refetch: refetchListOfSensorDevices } = useFetchDevicesListBasedOnPolyhouse(`${CLIENT_ENDPOINTS.FETCH_SENSORS_LIST}`, selectedPlotsId);
-
 
   const { data: selectedModulesData } = useFetchSelectedModules(selectedPolyhouse?.value);
   const selectedModule = selectedModulesData?.data?.find((mod: any) => mod?.path === pathname?.split('/')[3]);
@@ -72,7 +71,7 @@ const SensorsModuleComponent = () => {
             title="Configure Sensors"
             modalClassName="md:w-[60%] dark:bg-[#122031] md:h-[50dvh] overflow-y-auto"
             ref={modalRef}
-            // todo :  Uncomment and Enable for PolyERP for PolyERP
+            // todo :  Uncomment and Enable for PolyERP
             isOpenDisabled={true}
           >
             <SetupSensorForSensor handleFormSubmission={(data: any) => handleSensorsFormSubmission(data)} pathname={`${pathname?.split('/')[3]}`} selectedModule={selectedModule as any} />
@@ -80,7 +79,7 @@ const SensorsModuleComponent = () => {
           </ModalWindow>
         </div>
       </section>
-      <div className={`flex items-center justify-start gap-[1%] mb-[1%] bg-[#fff] w-full rounded-lg p-[1.5%]`}>
+      <div className={`flex items-center justify-start gap-[1%] mb-[1%] bg-[#fff] dark:bg-[#122031] w-full rounded-lg p-[1.5%]`}>
         <PolyhousesDropdownMultiSelect className='md:w-[40%]' selectedPolyhouse={selectedPlot} handleSelectOption={handlePlotSelection} placeHolder={"Select Plot"} />
         <Button onClick={onSearchClick}>Search</Button>
       </div>

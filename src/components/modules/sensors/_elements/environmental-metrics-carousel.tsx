@@ -11,6 +11,7 @@ import { DUMMY_PLOT_LISTS } from "@/constants/dummy-modules";
 import { CHARTS_TYPE_LIST } from "@/constants";
 import { useBoxScatteredChart } from "@/hooks/use-box-scattered-chart";
 import { useExportSoilReadingsDataOnDateRange,  } from "@/data-handling/queries/dynamic-component-queries";
+import SingleLineChartForAtmosphericValues from "./single-line-chart-temp-humitidy";
 
 
 const EnvironmentalMetricsCarousel = () => {
@@ -44,9 +45,10 @@ const [selectedDateRange, setSelectedDateRange] = useState<any>({
     salinityStatistics, salinityData, electricalConductivityData, electricalConductivityStatistics,
 
     electricalConductivitySensorChartOptions, moistureSensorChartOptions, nitrogenSensorChartOptions, phSensorChartOptions,
-    phosphorousSensorChartOptions, potassiumSensorChartOptions, salinitySensorChartOptions, temperatureSensorChartOptions,  refetchAll
+    phosphorousSensorChartOptions, potassiumSensorChartOptions, salinitySensorChartOptions, temperatureSensorChartOptions,  refetchAll, atmosphericHumidityData, atmosphericTemperatureData
   } = usePrepareDataForSensorCharts({start_date : `${selectedDateRange.start_date}`, end_date : `${selectedDateRange.end_date}`, polyhouse_ids :selectedPlot});
 const {chartData} =useBoxScatteredChart({start_date : `${selectedDateRange.start_date}`, end_date : `${selectedDateRange.end_date}`});
+
 
   // todo : Do not know what to do just do everyting you see that willbe the work
   const containerClasses = `flex my-[0.5%] bg-white dark:bg-[#121F31] rounded-lg shadow-md overflow-hidden flex-col md:flex-row `;
@@ -163,6 +165,12 @@ const {chartData} =useBoxScatteredChart({start_date : `${selectedDateRange.start
         {
           selectedChartType?.value === "line" && (
             <section className={``}>
+              {/* Atmospheric Temperature */}
+              <SingleLineChartForAtmosphericValues chartData={atmosphericTemperatureData || emptyAr} title="Atmospheric Temperature" dataKey={`temperature`}/>
+
+                   {/* Atmospheric Humidity */}
+                   <SingleLineChartForAtmosphericValues chartData={atmosphericHumidityData || emptyAr} title="Atmospheric Humidity" dataKey={`humidity`} />
+
             {/* Temperature */}
             {
               temperature && (
@@ -213,7 +221,7 @@ const {chartData} =useBoxScatteredChart({start_date : `${selectedDateRange.start
                   sensorStatistics={{
                     title: "Nitrogen Statistics",
                     description: "Statistics for the selected nitrogen sensor",
-                    unit: "ppm",
+                    unit: "mg/kg",
                   }}
                 />
               )
@@ -232,7 +240,7 @@ const {chartData} =useBoxScatteredChart({start_date : `${selectedDateRange.start
                   sensorStatistics={{
                     title: "Phosphorous Statistics",
                     description: "Statistics for the selected phosphorous sensor",
-                    unit: "ppm",
+                    unit: "mg/kg",
                   }}
                 />
               )
@@ -250,7 +258,7 @@ const {chartData} =useBoxScatteredChart({start_date : `${selectedDateRange.start
                   sensorStatistics={{
                     title: "Potassium Statistics",
                     description: "Statistics for the selected potassium sensor",
-                    unit: "ppm",
+                    unit: "mg/kg",
                   }}
                 />
               )
@@ -305,7 +313,7 @@ const {chartData} =useBoxScatteredChart({start_date : `${selectedDateRange.start
                   sensorStatistics={{
                     title: "Salinity Statistics",
                     description: "Statistics for the selected salinity sensor",
-                    unit: "μS/m",
+                    unit: "g/kg",
                   }}
                 />
               )

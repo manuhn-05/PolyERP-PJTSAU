@@ -1,13 +1,13 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { LuFacebook, LuTwitter, LuLinkedin, LuInstagram } from "react-icons/lu";
-import { useState } from "react";
+// import { LuFacebook, LuTwitter, LuLinkedin, LuInstagram } from "react-icons/lu";
+// import { useState } from "react";
 import PolyLight from "@/images/assets/logos/logo1-dark-no-bg.png"
 import { COPY_RIGHT, FOOTER_SMART_ERP } from "@/components/landing/landing-page-constants";
 
 export function PolyErpFooter() {
-  const [email, setEmail] = useState("")
+  // const [email, setEmail] = useState("")
 
   // function onSubscribe(e: React.FormEvent<HTMLFormElement>) {
   //   e.preventDefault()
@@ -38,21 +38,12 @@ export function PolyErpFooter() {
             </p>
           </div>
 
-          {/* Quick Links */}
-          <nav aria-label="Footer quick links" className="grid grid-cols-2 gap-3 sm:grid-cols-1">
-            <h3 className="sr-only">Quick Links</h3>
-            <FooterLink href="/">Home</FooterLink>
-            {/* <FooterLink href="/features">Features</FooterLink> */}
-            <FooterLink href="/pricing">Pricing</FooterLink>
-            <FooterLink href="/about">About</FooterLink>
-            <FooterLink href="/contact-us">Contact</FooterLink>
-            {/* <FooterLink href="/faq">FAQ</FooterLink> */}
-          </nav>
+      
 
           {/* Contact */}
           {/* todo : Change anchor - a tags to Link tag from nextJs */}
           <div className="flex flex-col gap-3">
-            <h3  className="text-sm font-medium tracking-wide text-[var(--footer-foreground)]">Contact</h3>
+            {/* <h3  className="text-sm font-medium tracking-wide text-[var(--footer-foreground)]">Contact</h3>
             <ul className="space-y-2 text-sm text-[var(--footer-muted-foreground)]">
               <li>
                 <span className="block">Email</span>
@@ -70,13 +61,13 @@ export function PolyErpFooter() {
                 <span className="block">Address</span>
                 Bangalore, Karnataka, India
               </li>
-            </ul>
+            </ul> */}
           </div>
 
           {/* Newsletter */}
           <div className="flex flex-col gap-3">
-            <h3 className="text-sm font-medium tracking-wide text-[var(--footer-foreground)]">Newsletter</h3>
-            <p className="text-sm text-[var(--footer-muted-foreground)]">Subscribe for updates</p>
+            {/* <h3 className="text-sm font-medium tracking-wide text-[var(--footer-foreground)]">Newsletter</h3>
+            <p className="text-sm text-[var(--footer-muted-foreground)]">Subscribe for updates</p> */}
             {/* <form onSubmit={onSubscribe} className="flex w-full gap-2">
               <label htmlFor="newsletter-email" className="sr-only">
                 Email address
@@ -95,7 +86,7 @@ export function PolyErpFooter() {
               </Button>
             </form> */}
             <div className="mt-4 flex items-center gap-3" aria-label="Social media">
-              <SocialIcon href="https://facebook.com" label="Facebook">
+              {/* <SocialIcon href="https://facebook.com" label="Facebook">
                 <LuFacebook className="size-5" aria-hidden="true" />
               </SocialIcon>
               <SocialIcon href="https://twitter.com" label="Twitter">
@@ -106,9 +97,20 @@ export function PolyErpFooter() {
               </SocialIcon>
               <SocialIcon href="https://instagram.com" label="Instagram">
                 <LuInstagram className="size-5" aria-hidden="true" />
-              </SocialIcon>
+              </SocialIcon> */}
             </div>
           </div>
+
+              {/* Quick Links */}
+              <nav aria-label="Footer quick links" className="grid grid-cols-2 gap-3 sm:grid-cols-1">
+            <h3 className="sr-only">Quick Links</h3>
+            <FooterLink href="/">Home</FooterLink>
+            {/* <FooterLink href="/features">Features</FooterLink> */}
+            <FooterLink href="/pricing">Pricing</FooterLink>
+            <FooterLink href="/about">About</FooterLink>
+            <FooterLink href="/contact-us">Contact</FooterLink>
+            {/* <FooterLink href="/faq">FAQ</FooterLink> */}
+          </nav>
         </div>
 
         {/* Divider and Legal */}

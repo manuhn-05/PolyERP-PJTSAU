@@ -72,5 +72,6 @@ export const HTTP_RESPONSE_CODES = {
     JOBS_ALLOTMENT: `jobs_allotment`,
 
     ADD_STOCKS_TO_PURCHASE_REGISTRY: `add/stocks`,
+    ATMOSPHERE_SENSOR_DATA: `atm_data`,
 
   }

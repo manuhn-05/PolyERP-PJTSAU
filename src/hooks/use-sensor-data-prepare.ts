@@ -8,9 +8,10 @@ export const usePrepareDataForSensorCharts = ({start_date, end_date,polyhouse_id
     return polyhouse_ids?.map((item: any) => `"${item.value}"`) || [];
   },[polyhouse_ids]);
 
-  const {soilData,   refetchAll} = useFetchSensnorsListData({start_date, end_date, polyhouse_ids : polyhouses});
+  const {soilData, refetchAll, chartOptions, atmosphereData} = useFetchSensnorsListData({start_date, end_date, polyhouse_ids : polyhouses});
 
-  const {chartData} = usePrepareChartData({soilData});
+
+  const {chartData} = usePrepareChartData({soilData, chartOptions, atmosphereData});
 
  
 

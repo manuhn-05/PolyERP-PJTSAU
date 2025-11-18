@@ -318,3 +318,89 @@ export function dateToExactReadbleTime(date: string) {
     hour12: true,
   });
 }
+
+export type SensorChartOptions = {
+  dataLabel: string;
+  xAxisTitle: string;
+  yAxisTitle: string;
+  xKey: string;
+  yKey: string;
+  dataList: any[];
+  min: number;
+  max: number;
+  crossLines: {
+    range: [number, number];
+    fill: string;
+    stroke: string;
+    strokeWidth: number;
+  }[];
+};
+export const calculateRangesForChartOptions = (
+  sensorData: any[],
+  sensorKey: string,
+  label: string
+): SensorChartOptions => {
+ 
+
+  const mins = sensorData.map(d => d[sensorKey]?.[0]).filter((v: number) => v != null);
+  const maxs = sensorData.map(d => d[sensorKey]?.[1]).filter((v: number) => v != null);
+
+  // Prevent Infinity crashes when no valid data found
+  if (!mins.length || !maxs.length) {
+    return {
+      dataLabel: label,
+      xAxisTitle: "Time",
+      yAxisTitle: label,
+      xKey: "time",
+      yKey: sensorKey,
+      dataList: [],
+      min: 0,
+      max: 0,
+      crossLines: [],
+    };
+  }
+
+  const globalMin = Math.min(...mins);
+  const globalMax = Math.max(...maxs);
+
+  const avgMin = mins.reduce((a: number, b: number) => a + b, 0) / mins.length;
+  const avgMax = maxs.reduce((a: number, b: number) => a + b, 0) / maxs.length;
+
+  // Base min always starts at 0
+  let min = 0;
+  let max = globalMax +100 ;
+
+
+  // Special case for temperature
+  if (sensorKey === "temperature" ||sensorKey === "moisture") {
+    max = Math.min(max, 100);
+  }
+  if (sensorKey === "ec") {
+    max = Math.min(max, 3);
+  }
+  if (sensorKey === "ph") {
+    max = Math.min(max, 14);
+  }
+
+  if (sensorKey === "salinity") {
+    // max = Math.min(max, 14);
+        // todo : add max value for salinity the actual one instead of 1000
+        max = 1000;
+  }
+  return {
+    dataLabel: label,
+    xAxisTitle: "Time",
+    yAxisTitle: label,
+    xKey: "time",
+    yKey: sensorKey,
+    dataList: [],
+    min,
+    max,
+    crossLines: [
+      { range: [min, Math.floor(avgMin)], fill: "rgba(232, 47, 10, 0.2)", stroke: "red", strokeWidth: 1 },
+      { range: [Math.floor(avgMin), Math.ceil(avgMax)], fill: "rgba(0, 200, 0, 0.2)", stroke: "green", strokeWidth: 1 },
+      { range: [Math.ceil(avgMax), max], fill: "rgba(232, 47, 10, 0.2)", stroke: "red", strokeWidth: 1 },
+    ],
+  };
+};
+
