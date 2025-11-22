@@ -372,7 +372,10 @@ export const calculateRangesForChartOptions = (
 
 
   // Special case for temperature
-  if (sensorKey === "temperature" ||sensorKey === "moisture") {
+  if (sensorKey === "temperature" ) {
+    max = Math.min(max, 50);
+  }
+  if (sensorKey === "moisture") {
     max = Math.min(max, 100);
   }
   if (sensorKey === "ec") {
@@ -385,7 +388,7 @@ export const calculateRangesForChartOptions = (
   if (sensorKey === "salinity") {
     // max = Math.min(max, 14);
         // todo : add max value for salinity the actual one instead of 1000
-        max = 1000;
+        max = 2000;
   }
   return {
     dataLabel: label,
