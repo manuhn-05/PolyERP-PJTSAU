@@ -45,7 +45,8 @@ const [selectedDateRange, setSelectedDateRange] = useState<any>({
     salinityStatistics, salinityData, electricalConductivityData, electricalConductivityStatistics,
 
     electricalConductivitySensorChartOptions, moistureSensorChartOptions, nitrogenSensorChartOptions, phSensorChartOptions,
-    phosphorousSensorChartOptions, potassiumSensorChartOptions, salinitySensorChartOptions, temperatureSensorChartOptions,  refetchAll, atmosphericHumidityData, atmosphericTemperatureData
+    phosphorousSensorChartOptions, potassiumSensorChartOptions, salinitySensorChartOptions, 
+    temperatureSensorChartOptions,  refetchAll, atmosphericHumidityData, atmosphericTemperatureData
   } = usePrepareDataForSensorCharts({start_date : `${selectedDateRange.start_date}`, end_date : `${selectedDateRange.end_date}`, polyhouse_ids :selectedPlot});
 const {chartData} =useBoxScatteredChart({start_date : `${selectedDateRange.start_date}`, end_date : `${selectedDateRange.end_date}`});
 
