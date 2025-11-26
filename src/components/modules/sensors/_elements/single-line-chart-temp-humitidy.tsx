@@ -29,12 +29,7 @@ const SingleLineChartForAtmosphericValues = ({ chartData, dataKey, title }: Prop
   });
 
 
-  /*
   
-  So The chart is finr plotting for today's data when we select the date for yester day or any prevvious daate plotting is not working. means
-  the chart is not plotting the data for the last one but from API I am getting the data it's not auto scaling the data. and plotting the chart
-  */
-
   useEffect(() => {
     if (!chartData || chartData.length === 0) return;
   
@@ -47,7 +42,7 @@ const SingleLineChartForAtmosphericValues = ({ chartData, dataKey, title }: Prop
     
 
   
-    const options: AgChartOptions = {
+    const options: any = {
       data: formattedData,
       theme: theme === "dark" ? "ag-default-dark" : "ag-default",
       background: {
@@ -61,7 +56,7 @@ const SingleLineChartForAtmosphericValues = ({ chartData, dataKey, title }: Prop
           strokeWidth: 2,
           marker: { enabled: true, size: 8 },
           tooltip: {
-            renderer: ({ datum }) => ({
+            renderer: ({ datum }:any) => ({
               title: `${datum.dateDisplay} ${datum.timeDisplay}`,
               content: `<div><strong>Value:</strong> ${datum.value}</div>`,
             }),
@@ -71,12 +66,31 @@ const SingleLineChartForAtmosphericValues = ({ chartData, dataKey, title }: Prop
       axes: [
         {
           position: "bottom",
-          type: "number",
+          type: "category",
           title: { text: "Time" },
           min: formattedData[0]?.timestamp,   // ⬅ ensures starts from zero relative to first point
+          tick: {
+            values: (() => {
+              const ticks: number[] = [];
+              const start = formattedData[0]?.timestamp;
+              const end = formattedData[formattedData.length - 1]?.timestamp;
+
+              let current = new Date(start);
+              current.setHours(0, 0, 0, 0);
+
+              while (current.getTime() <= end) {
+                ticks.push(current.getTime());
+                current.setDate(current.getDate() + 1);
+              }
+
+              return ticks;
+            })(),
+          },
           label: {
-            formatter: ({ value }) => {
+            formatter: ({ value }: any) => {
               const date = new Date(value);
+
+              // Round time to the nearest hour
               const roundedDate = new Date(
                 date.getFullYear(),
                 date.getMonth(),
@@ -86,9 +100,24 @@ const SingleLineChartForAtmosphericValues = ({ chartData, dataKey, title }: Prop
                 0,
                 0
               );
-              return roundedDate.toLocaleTimeString("en-IN", { hour: "numeric", hour12: true });
+
+              const timeString = roundedDate.toLocaleTimeString("en-IN", {
+                hour: "2-digit",
+                minute: "2-digit",
+                hour12: true,
+              });
+
+              const dateString = roundedDate.toLocaleDateString("en-IN", {
+                day: "2-digit",
+                month: "short",
+              });
+
+              return `${timeString}\n${dateString}`; // Multi-line label
             },
             color: theme === "dark" ? "#ffffff" : "#000000",
+            fontSize: 12,
+            rotation: 315,
+            minSpacing: 0,
           },
         },
         {

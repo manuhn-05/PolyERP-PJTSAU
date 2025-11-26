@@ -97,8 +97,22 @@ const SensorCharts: React.FC<SensorChartsProps> = ({
           type: "time",
           title: { text: xAxisTitle },
           label: {
-            format: "%-I %p", // shows 1 PM, 2 PM, etc.
-            fontSize: 10,
+            formatter: ({ value }) => {
+              const date = new Date(value);
+              const timeString = date.toLocaleTimeString("en-IN", {
+                hour: "2-digit",
+                minute: "2-digit",
+              });
+
+              const dateString = date.toLocaleDateString("en-IN", {
+                day: "2-digit",
+                month: "short",
+              });
+
+              return `${timeString}\n${dateString}`;
+            },
+            rotation: 315,
+            fontSize: 12,
           },
         } as AgCartesianAxisOptions,
         {
@@ -108,8 +122,15 @@ const SensorCharts: React.FC<SensorChartsProps> = ({
           max,
           nice: false, // <--- stops Ag Charts from rounding the axis domain
           tick: {
-            step: 2, // ✅ we'll fix 'interval' next
-            values: [0, 2, 4, 6, 8, 10, 12, 14],
+            interval: {
+              step: (() => {
+                const range = (max ?? 0) - (min ?? 0);
+                if (range <= 10) return 1;
+                if (range <= 30) return 2;
+                if (range <= 60) return 5;
+                return 10;
+              })(),
+            },
           },
           title: { text: yAxisTitle },
           crossLines: crossLines.map((cl) => ({
